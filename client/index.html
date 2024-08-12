@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,159 +7,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>myChat</title>
-  <style>
-    /* Set box-sizing for all elements */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
 
-    :root {
-      /* Define color variables */
-      --primary-color: #128C7E;
-      --secondary-color: #25D366;
-      --background-color: #f0f0f0; 
-      --chat-background-color: #ffffff; 
-      --incoming-msg-color: #d3d3d3;
-      --outgoing-msg-color: #c0c0c0;
-      --text-color: #333333;
-    }
+    <style>
+  /* Set box-sizing for all elements */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-    /* Style the body element */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100vh;
-      padding: 36px;
-      background-color: var(--background-color);
-      color: var(--text-color);
-    }
+  :root {
+    /* Define color variables */
+    --primary-color: #128C7E;
+    --secondary-color: #25D366;
+    --background-color: #f0f0f0; 
+    --chat-background-color: #ffffff; 
+    --incoming-msg-color: #d3d3d3;
+    --outgoing-msg-color: #c0c0c0;
+    --text-color: #333333;
+  }
 
-    /* Container for chat windows */
-    #chat-container {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      justify-content: space-between;
-    }
+  /* Style the body element */
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    padding: 36px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
 
-    /* Style for each chat window */
-    .chat-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 48%;
-    }
+  /* Container for chat windows */
+  #chat-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+  }
 
-    .chat-title {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
+  /* Style for each chat window */
+  .chat-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 48%;
+  }
 
-    .chat {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      overflow: hidden;
-      width: 100%;
-      height: 500px;
-      background-color: var(--chat-background-color);
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+  .chat-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
 
-    /* Style for chat messages container */
-    .chat ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 10px;
-      overflow-y: auto;
-      flex: 1;
-      scroll-behavior: smooth;
-      background-color: var(--chat-background-color); /* Background for messages */
-    }
+  .chat {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    height: 500px;
+    background-color: var(--chat-background-color);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-    /* Style for individual chat messages */
-    .chat ul li {
-      margin-bottom: 8px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      max-width: 70%;
-      word-wrap: break-word;
-      font-size: 14px;
-      color: var(--text-color);
-    }
+  /* Style for chat messages container */
+  .chat ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    overflow-y: auto;
+    flex: 1;
+    scroll-behavior: smooth;
+    background-color: var(--chat-background-color); /* Background for messages */
+  }
 
-    .chat ul li p {
-      margin: 0;
-    }
+  /* Style for individual chat messages */
+  .chat ul li {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-size: 14px;
+    color: var(--text-color);
+  }
 
-    .chat ul li small {
-      display: block;
-      text-align: right;
-      color: #555555;
-      font-size: 10px;
-    }
+  .chat ul li p {
+    margin: 0;
+  }
 
-    /* Different background colors for incoming and outgoing messages */
-    .chat ul li:nth-child(odd) {
-      background-color: var(--outgoing-msg-color);
-      align-self: flex-end;
-    }
+  .chat ul li small {
+    display: block;
+    text-align: right;
+    color: #555555;
+    font-size: 10px;
+  }
 
-    .chat ul li:nth-child(even) {
-      background-color: var (--incoming-msg-color);
-      align-self: flex-start;
-    }
+  /* Different background colors for incoming and outgoing messages */
+  .chat ul li:nth-child(odd) {
+    background-color: var(--outgoing-msg-color);
+    align-self: flex-end;
+  }
 
-    /* Style for the chat input form */
-    .chat form {
-      display: flex;
-      padding: 8px;
-      background-color: var(--primary-color);
-    }
+  .chat ul li:nth-child(even) {
+    background-color: var (--incoming-msg-color);
+    align-self: flex-start;
+  }
 
-    /* Style for the input field */
-    .chat input {
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      flex: 1;
-      margin-right: 8px;
-      font-size: 14px;
-      color: var(--text-color);
-      background-color: #e6e6e6; /* Lighter input background */
-    }
+  /* Style for the chat input form */
+  .chat form {
+    display: flex;
+    padding: 8px;
+    background-color: var(--primary-color);
+  }
 
-    .chat input:focus {
-      outline: none;
-      border-color: var(--secondary-color);
-    }
+  /* Style for the input field */
+  .chat input {
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    flex: 1;
+    margin-right: 8px;
+    font-size: 14px;
+    color: var(--text-color);
+    background-color: #e6e6e6; /* Lighter input background */
+  }
 
-    /* Style for the send button */
-    .chat button {
-      background-color: var(--secondary-color);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
+  .chat input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+  }
 
-    .chat button:hover {
-      background-color: #34B7F1;
-    }
-  </style>
+  /* Style for the send button */
+  .chat button {
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .chat button:hover {
+    background-color: #34B7F1;
+  }
+</style>
+    
+
 </head>
 
 <body>
@@ -178,7 +183,14 @@
   <script type="module">
     import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
 
-    // Function to get or generate a username for a chat window
+    document.addEventListener('DOMContentLoaded', async () => {
+      await createChatWindow('chat1');
+      setTimeout(async () => {
+        await createChatWindow('chat2');
+      }, 1000); // Espera 1 segundo antes de inicializar la segunda ventana
+    });
+
+    // Función para obtener o generar un nombre de usuario para una ventana de chat
     const getUsername = async (id) => {
       const storedUsername = localStorage.getItem(`username-${id}`);
       if (storedUsername) {
@@ -192,7 +204,7 @@
       return randomUsername;
     };
 
-    // Function to create a chat window
+    // Función para crear una ventana de chat
     const createChatWindow = async (chatId) => {
       const chatSection = document.getElementById(chatId);
 
@@ -209,10 +221,10 @@
       const form = document.createElement('form');
       const input = document.createElement('input');
       input.id = `input-${chatId}`;
-      input.type = "text";  // Ensure input type is text to display keyboard on mobile
-      input.autocomplete = "off";  // Disable autocomplete for a cleaner experience
-      input.autocorrect = "off";   // Disable autocorrect if not needed
-      input.spellcheck = "false";  // Disable spellcheck if not needed
+      input.type = "text";  // Asegúrate de que el tipo de input sea "text" para mostrar el teclado en móviles
+      input.autocomplete = "off";  // Desactiva el autocompletado para una experiencia más limpia
+      input.autocorrect = "off";   // Desactiva la autocorrección si no es necesaria
+      input.spellcheck = "false";  // Desactiva el corrector ortográfico si no es necesario
       const button = document.createElement('button');
       button.textContent = 'Send';
 
@@ -221,7 +233,7 @@
       chatSection.appendChild(messages);
       chatSection.appendChild(form);
 
-      // Listen for chat messages from the server
+      // Escuchar mensajes de chat del servidor
       socket.on('chat message', (msg, serverOffset, username) => {
         const item = `<li><p>${msg}</p><small>${username}</small></li>`;
         messages.insertAdjacentHTML('beforeend', item);
@@ -229,7 +241,7 @@
         messages.scrollTop = messages.scrollHeight;
       });
 
-      // Handle message submission
+      // Manejar el envío de mensajes
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (input.value) {
@@ -238,15 +250,12 @@
         }
       });
 
-      // Focus the input field on mobile devices when the chat window is opened
+      // Enfocar el campo de entrada en dispositivos móviles cuando se abre la ventana de chat
       chatSection.addEventListener('click', () => {
         input.focus();
       });
     };
 
-    // Initialize two chat windows
-    await createChatWindow('chat1');
-    await createChatWindow('chat2');
   </script>
 </body>
 
