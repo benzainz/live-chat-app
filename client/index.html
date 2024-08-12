@@ -46,11 +46,25 @@
     }
 
     /* Style for each chat window */
+    .chat-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 48%;
+    }
+
+    .chat-title {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
     .chat {
       border: 1px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
-      width: 48%;
+      width: 100%;
       height: 500px;
       background-color: var(--chat-background-color);
       display: flex;
@@ -98,7 +112,7 @@
     }
 
     .chat ul li:nth-child(even) {
-      background-color: var(--incoming-msg-color);
+      background-color: var (--incoming-msg-color);
       align-self: flex-start;
     }
 
@@ -148,7 +162,17 @@
 
 <body>
   <div id="chat-container">
-    <!-- Chat windows will be dynamically added here -->
+    <!-- First Device Chat -->
+    <div class="chat-section">
+      <h2 class="chat-title">First Device</h2>
+      <section id="chat1" class="chat"></section>
+    </div>
+
+    <!-- Second Device Chat -->
+    <div class="chat-section">
+      <h2 class="chat-title">Second Device</h2>
+      <section id="chat2" class="chat"></section>
+    </div>
   </div>
 
   <script type="module">
@@ -170,10 +194,7 @@
 
     // Function to create a chat window
     const createChatWindow = async (chatId) => {
-      const chatSection = document.createElement('section');
-      chatSection.id = chatId;
-      chatSection.className = 'chat';
-      document.getElementById('chat-container').appendChild(chatSection);
+      const chatSection = document.getElementById(chatId);
 
       const socket = io({
         auth: {
@@ -188,6 +209,10 @@
       const form = document.createElement('form');
       const input = document.createElement('input');
       input.id = `input-${chatId}`;
+      input.type = "text";  // Ensure input type is text to display keyboard on mobile
+      input.autocomplete = "off";  // Disable autocomplete for a cleaner experience
+      input.autocorrect = "off";   // Disable autocorrect if not needed
+      input.spellcheck = "false";  // Disable spellcheck if not needed
       const button = document.createElement('button');
       button.textContent = 'Send';
 
@@ -211,6 +236,11 @@
           socket.emit('chat message', input.value);
           input.value = '';
         }
+      });
+
+      // Focus the input field on mobile devices when the chat window is opened
+      chatSection.addEventListener('click', () => {
+        input.focus();
       });
     };
 
