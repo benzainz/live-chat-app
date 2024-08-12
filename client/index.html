@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>myChat</title>
-
   <style>
     /* Set box-sizing for all elements */
     *,
@@ -20,9 +19,16 @@
       --secondary-color: #25D366;
       --background-color: #f0f0f0;
       --chat-background-color: #ffffff;
-      --incoming-msg-color: #d3d3d3;
-      --outgoing-msg-color: #c0c0c0;
+      --incoming-msg-color: #d1e7dd; /* Más claro para mayor contraste */
+      --outgoing-msg-color: #ffccd5; /* Más claro para mayor contraste */
       --text-color: #333333;
+
+      /* Dark mode variables */
+      --dark-background-color: #121212;
+      --dark-chat-background-color: #1e1e1e;
+      --dark-text-color: #f0f0f0;
+      --dark-incoming-msg-color: #285943; /* Más claro para mayor contraste */
+      --dark-outgoing-msg-color: #6d4c41; /* Más claro para mayor contraste */
     }
 
     /* Style the body element */
@@ -36,6 +42,12 @@
       padding: 36px;
       background-color: var(--background-color);
       color: var(--text-color);
+      position: relative;
+    }
+
+    body.dark-mode {
+      background-color: var(--dark-background-color);
+      color: var(--dark-text-color);
     }
 
     /* Container for chat windows */
@@ -73,6 +85,10 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    body.dark-mode .chat {
+      background-color: var(--dark-chat-background-color);
+    }
+
     /* Style for chat messages container */
     .chat ul {
       list-style-type: none;
@@ -82,6 +98,10 @@
       flex: 1;
       scroll-behavior: smooth;
       background-color: var(--chat-background-color); /* Background for messages */
+    }
+
+    body.dark-mode .chat ul {
+      background-color: var(--dark-chat-background-color);
     }
 
     /* Style for individual chat messages */
@@ -95,6 +115,10 @@
       color: var(--text-color);
     }
 
+    body.dark-mode .chat ul li {
+      color: var(--dark-text-color);
+    }
+
     .chat ul li p {
       margin: 0;
     }
@@ -102,7 +126,7 @@
     .chat ul li small {
       display: block;
       text-align: right;
-      color: #555555;
+      color: #fa9b64;
       font-size: 10px;
     }
 
@@ -112,9 +136,17 @@
       align-self: flex-end;
     }
 
+    body.dark-mode .chat ul li:nth-child(odd) {
+      background-color: var(--dark-outgoing-msg-color);
+    }
+
     .chat ul li:nth-child(even) {
       background-color: var(--incoming-msg-color);
       align-self: flex-start;
+    }
+
+    body.dark-mode .chat ul li:nth-child(even) {
+      background-color: var(--dark-incoming-msg-color);
     }
 
     /* Style for the chat input form */
@@ -124,7 +156,6 @@
       background-color: var(--primary-color);
     }
 
-    /* Style for the input field */
     .chat input {
       border-radius: 20px;
       border: 1px solid #ccc;
@@ -141,51 +172,79 @@
       border-color: var(--secondary-color);
     }
 
-/* Style for the send button */
-.chat button {
-    background-color: var(--secondary-color);
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 12px; /* Ajusta el tamaño de la fuente */
-    line-height: 1; /* Asegura que el texto esté centrado verticalmente */
-    text-align: center; /* Centra el texto horizontalmente */
-    padding: 0; /* Elimina el padding extra */
-    overflow: hidden; /* Asegura que el texto no se salga del botón */
-}
+    .chat button {
+      background-color: var(--secondary-color);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 2.5em; /* Ajusta este valor para cambiar el tamaño del círculo */
+      height: 2.5em; /* Ajusta este valor para cambiar el tamaño del círculo */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: .7em; /* Tamaño del texto ajustable */
+      line-height: 1; /* Asegura que el texto no se desplace verticalmente */
+    }
+
     .chat button:hover {
       background-color: #34B7F1;
     }
 
-    /* Mobile styles */
-    @media (max-width: 768px) {
-      #chat-container {
-        flex-direction: column;
-      }
+    /* Toggle switch container */
+    .toggle-switch {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      padding-bottom: 49px; /* Padding between label and toggle switch */
+    }
 
-      .chat-section {
-        width: 100%;
-      }
+    .toggle-switch label {
+      margin-right: 10px;
+    }
+
+    .toggle-switch input[type="checkbox"] {
+      appearance: none;
+      width: 40px;
+      height: 20px;
+      background: var(--secondary-color);
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .toggle-switch input[type="checkbox"]::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      transition: transform 0.2s ease;
+    }
+
+    .toggle-switch input[type="checkbox"]:checked::before {
+      transform: translateX(20px);
     }
   </style>
-
 </head>
 
 <body>
+  <div class="toggle-switch">
+    <label for="darkModeToggle">Night Mode</label>
+    <input type="checkbox" id="darkModeToggle">
+  </div>
+
   <div id="chat-container">
-    <!-- First Device Chat -->
     <div class="chat-section">
       <h2 class="chat-title">First Device</h2>
       <section id="chat1" class="chat"></section>
     </div>
-
-    <!-- Second Device Chat -->
     <div class="chat-section">
       <h2 class="chat-title">Second Device</h2>
       <section id="chat2" class="chat"></section>
@@ -195,14 +254,13 @@
   <script type="module">
     import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      await createChatWindow('chat1');
-      setTimeout(async () => {
-        await createChatWindow('chat2');
-      }, 1000); // Espera 1 segundo antes de inicializar la segunda ventana
+    // Toggle dark mode
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('change', (e) => {
+      document.body.classList.toggle('dark-mode', e.target.checked);
     });
 
-    // Función para obtener o generar un nombre de usuario para una ventana de chat
+    // Function to get or generate a username for a chat window
     const getUsername = async (id) => {
       const storedUsername = localStorage.getItem(`username-${id}`);
       if (storedUsername) {
@@ -216,10 +274,10 @@
       return randomUsername;
     };
 
-    // Función para crear una ventana de chat
+    // Function to create a chat window
     const createChatWindow = async (chatId) => {
       const chatSection = document.getElementById(chatId);
-
+      
       const socket = io({
         auth: {
           username: await getUsername(chatId),
@@ -245,7 +303,7 @@
       chatSection.appendChild(messages);
       chatSection.appendChild(form);
 
-      // Escuchar mensajes de chat del servidor
+      // Listen for chat messages from the server
       socket.on('chat message', (msg, serverOffset, username) => {
         const item = `<li><p>${msg}</p><small>${username}</small></li>`;
         messages.insertAdjacentHTML('beforeend', item);
@@ -253,7 +311,7 @@
         messages.scrollTop = messages.scrollHeight;
       });
 
-      // Manejar el envío de mensajes con el botón de enviar
+      // Handle message submission
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (input.value) {
@@ -261,19 +319,11 @@
           input.value = '';
         }
       });
-
-      // Agregar el evento touchstart para que funcione en dispositivos móviles
-      button.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        form.dispatchEvent(new Event('submit'));
-      });
-
-      // Enfocar el campo de entrada en dispositivos móviles cuando se abre la ventana de chat
-      chatSection.addEventListener('click', () => {
-        input.focus();
-      });
     };
 
+    // Initialize two chat windows
+    await createChatWindow('chat1');
+    await createChatWindow('chat2');
   </script>
 </body>
 
