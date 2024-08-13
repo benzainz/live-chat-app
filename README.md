@@ -22,4 +22,4 @@ MyChat is a real-time chat application that allows users to join public or priva
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/mychat-app.git
+   git clone https://github.com/benzainz/live-chat-app
