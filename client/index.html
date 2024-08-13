@@ -45,36 +45,25 @@
 
     // Function to get or generate a username and assign a color
     const getUsername = async (id) => {
-  const storedUsername = localStorage.getItem(`username-${id}`);
-  if (storedUsername) {
-    return storedUsername;
-  }
+   const storedUsername = localStorage.getItem(`username-${id}`);
+   if (storedUsername) {
+     return storedUsername;
+   }
 
-  try {
-    const res = await fetch('https://random-data-api.com/api/users/random_user');
-    
-    // Verificar si el contenido es JSON
-    const contentType = res.headers.get('content-type');
-    if (res.status === 429) {
-      console.warn('Rate limit exceeded, using fallback username');
-      return `User-${id}`;
-    }
-    
-    if (!contentType || !contentType.includes('application/json')) {
-      console.error('Expected JSON, got:', await res.text());
-      return `User-${id}`; // Fallback username
-    }
-
-    const { username: randomUsername } = await res.json();
-    localStorage.setItem(`username-${id}`, randomUsername);
-    return randomUsername;
-  } catch (error) {
-    console.error('Error fetching random user:', error);
-    return `User-${id}`; // Fallback username
-  }
-};
-
-
+   try {
+     const res = await fetch('https://random-data-api.com/api/users/random_user');
+     if (res.status === 429) {
+       console.warn('Rate limit exceeded, using fallback username');
+       return `User-${id}`;
+     }
+     const { username: randomUsername } = await res.json();
+     localStorage.setItem(`username-${id}`, randomUsername);
+     return randomUsername;
+   } catch (error) {
+     console.error('Error fetching random user:', error);
+     return `User-${id}`; // Fallback username
+   }
+ };
 
 
     // Function to get or assign a color for a username

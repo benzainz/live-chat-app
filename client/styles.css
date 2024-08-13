@@ -1,4 +1,3 @@
-
 /* Set box-sizing for all elements */
 *,
 *::before,
@@ -31,8 +30,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  padding: 36px;
+  min-height: 100vh;
+  padding: 20px;
   background-color: var(--background-color);
   color: var(--text-color);
   position: relative;
@@ -49,6 +48,7 @@ body.dark-mode {
   gap: 10px;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: wrap; /* Permite que los contenedores se ajusten en pantallas pequeñas */
 }
 
 /* Style for each chat window */
@@ -57,14 +57,15 @@ body.dark-mode {
   flex-direction: column;
   align-items: center;
   width: 48%;
+  min-width: 300px; /* Asegura que no se hagan demasiado pequeños en pantallas pequeñas */
+  margin-bottom: 10px; /* Añade espacio en la parte inferior para dispositivos móviles */
 }
 
 .chat-title {
   text-align: center;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 16px; /* Ajusta el tamaño de la fuente */
   font-weight: bold;
-  
 }
 
 .chat {
@@ -72,7 +73,7 @@ body.dark-mode {
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
-  height: 500px;
+  height: 400px; /* Ajuste la altura para móviles */
   background-color: var(--chat-background-color);
   display: flex;
   flex-direction: column;
@@ -91,7 +92,7 @@ body.dark-mode .chat {
   overflow-y: auto;
   flex: 1;
   scroll-behavior: smooth;
-  background-color: var(--chat-background-color); /* Background for messages */
+  background-color: var(--chat-background-color);
 }
 
 body.dark-mode .chat ul {
@@ -158,7 +159,7 @@ body.dark-mode .chat ul li:nth-child(even) {
   margin-right: 8px;
   font-size: 14px;
   color: var(--text-color);
-  background-color: #e6e6e6; /* Lighter input background */
+  background-color: #e6e6e6;
 }
 
 .chat input:focus {
@@ -171,14 +172,14 @@ body.dark-mode .chat ul li:nth-child(even) {
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 2.5em; /* Ajusta este valor para cambiar el tamaño del círculo */
-  height: 2.5em; /* Ajusta este valor para cambiar el tamaño del círculo */
+  width: 2.5em;
+  height: 2.5em;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: .7em; /* Tamaño del texto ajustable */
-  line-height: 1; /* Asegura que el texto no se desplace verticalmente */
+  font-size: .7em;
+  line-height: 1;
 }
 
 .chat button:hover {
@@ -192,7 +193,7 @@ body.dark-mode .chat ul li:nth-child(even) {
   right: 10px;
   display: flex;
   align-items: center;
-  padding-bottom: 49px; /* Padding between label and toggle switch */
+  padding-bottom: 49px;
 }
 
 .toggle-switch label {
@@ -224,4 +225,19 @@ body.dark-mode .chat ul li:nth-child(even) {
 
 .toggle-switch input[type="checkbox"]:checked::before {
   transform: translateX(20px);
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  #chat-container {
+    flex-direction: column;
+  }
+
+  .chat-section {
+    width: 100%;
+  }
+
+  .chat {
+    height: 300px;
+  }
 }
