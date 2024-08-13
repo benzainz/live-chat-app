@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <!-- Meta information and linking CSS -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>myChat</title>
@@ -9,11 +10,13 @@
 </head>
 
 <body>
+  <!-- Toggle switch for dark mode -->
   <div class="toggle-switch">
     <label for="darkModeToggle" id="darkModeLabel">Night Mode</label>
     <input type="checkbox" id="darkModeToggle">
   </div>
 
+  <!-- Container for chat sections -->
   <div id="chat-container">
     <div class="chat-section">
       <h2 class="chat-title">Device X</h2>
@@ -25,6 +28,7 @@
     </div>
   </div>
 
+  <!-- JavaScript to handle chat and dark mode functionality -->
   <script type="module">
     import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
 
@@ -131,4 +135,3 @@
 </body>
 
 </html>
-

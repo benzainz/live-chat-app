@@ -48,7 +48,7 @@ body.dark-mode {
   gap: 10px;
   width: 100%;
   justify-content: space-between;
-  flex-wrap: wrap; /* Permite que los contenedores se ajusten en pantallas pequeñas */
+  flex-wrap: wrap; /* Allows containers to adjust on small screens */
 }
 
 /* Style for each chat window */
@@ -57,14 +57,14 @@ body.dark-mode {
   flex-direction: column;
   align-items: center;
   width: 48%;
-  min-width: 300px; /* Asegura que no se hagan demasiado pequeños en pantallas pequeñas */
-  margin-bottom: 10px; /* Añade espacio en la parte inferior para dispositivos móviles */
+  min-width: 300px; /* Ensures they don't get too small on small screens */
+  margin-bottom: 10px; /* Adds space at the bottom for mobile devices */
 }
 
 .chat-title {
   text-align: center;
   margin-bottom: 10px;
-  font-size: 16px; /* Ajusta el tamaño de la fuente */
+  font-size: 16px; /* Adjust font size */
   font-weight: bold;
 }
 
@@ -73,7 +73,7 @@ body.dark-mode {
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
-  height: 400px; /* Ajuste la altura para móviles */
+  height: 400px; /* Adjust height for mobile */
   background-color: var(--chat-background-color);
   display: flex;
   flex-direction: column;

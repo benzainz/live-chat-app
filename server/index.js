@@ -7,19 +7,23 @@ import { createServer } from 'node:http';
 
 dotenv.config();
 
+// Set up port for server
 const port = process.env.PORT ?? 3000;
 
+// Create express app and HTTP server
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   connectionStateRecovery: {}
 });
 
+// Set up database client
 const db = createClient({
   url: 'libsql://sharp-the-call-chaos.turso.io',
   authToken: process.env.DB_TOKEN
 });
 
+// Ensure messages table exists
 await db.execute(`
   CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,6 +32,7 @@ await db.execute(`
   )
 `);
 
+// Handle socket connections
 io.on('connection', async (socket) => {
   console.log('A user has connected!');
 
@@ -52,6 +57,7 @@ io.on('connection', async (socket) => {
     io.emit('chat message', msg, result.lastInsertRowid.toString(), username);
   });
 
+  // Load messages for users that did not recover connection
   if (!socket.recovered) {
     try {
       const results = await db.execute({
@@ -68,13 +74,16 @@ io.on('connection', async (socket) => {
   }
 });
 
+// Use morgan logger and serve static files
 app.use(logger('dev'));
 app.use(express.static('client'));
 
+// Serve main HTML file on root route
 app.get('/', (req, res) => {
   res.sendFile(process.cwd() + '/client/index.html');
 });
 
+// Start server
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
