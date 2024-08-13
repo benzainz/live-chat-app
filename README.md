@@ -23,3 +23,22 @@ MyChat is a real-time chat application that allows users to join public or priva
 
    ```bash
    git clone https://github.com/benzainz/live-chat-app
+
+
+2. Navigate to the project directory:
+cd mychat-app
+
+3. Install the necessary dependencies:
+npm install
+
+4. Set up environment variables in a .env file at the root of the project.
+
+5. Start the application in development mode:
+npm run dev
+
+6. Or in production mode:
+npm start
+
+7. Access the application in your browser at http://localhost:3000.
+
+to see my app go to https://live-chat-app-22.onrender.com/
